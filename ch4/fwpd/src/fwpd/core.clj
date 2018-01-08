@@ -71,19 +71,19 @@
 (def validations {:name identity
                   :glitter-index identity})
 
-
-
 (defn validate
   [validations records]
   (= 0 (count (drop-while
                 (fn [elm]
-                  (= (count validations) (count (->> (keys validations)
-                                                     (map elm)
-                                                     (filter identity))))))
-                                              
-         records)))
+                  (do 
+                    (= (count validations) (->> (keys validations)
+                                                (map elm)
+                                                (filter identity)
+                                                count))))                                
+                records))))
 
 (validate validations new-records)
+(validate validations records)
 
 ; ex4
 (defn suspects->csv
